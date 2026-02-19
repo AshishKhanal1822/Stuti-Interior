@@ -34,7 +34,7 @@ const TestimonialsSection = () => {
   const prev = () => setCurrent((p) => (p - 1 + testimonials.length) % testimonials.length);
 
   return (
-    <section id="testimonials" className="section-padding bg-primary text-primary-foreground" ref={ref}>
+    <section id="testimonials" className="section-padding" ref={ref}>
       <div className="container mx-auto max-w-4xl">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -57,13 +57,13 @@ const TestimonialsSection = () => {
               className="text-center px-4"
             >
               <Quote className="mx-auto mb-6 text-secondary" size={48} />
-              <p className="text-primary-foreground/80 font-body text-lg md:text-xl leading-relaxed mb-8 italic">
+              <p className="text-muted-foreground font-body text-lg md:text-xl leading-relaxed mb-8 italic">
                 "{testimonials[current].text}"
               </p>
               <h4 className="font-display text-xl font-bold text-secondary">
                 {testimonials[current].name}
               </h4>
-              <p className="text-primary-foreground/60 font-body text-sm">
+              <p className="text-muted-foreground font-body text-sm">
                 {testimonials[current].location}
               </p>
             </motion.div>
@@ -72,13 +72,13 @@ const TestimonialsSection = () => {
           <div className="flex justify-center gap-4 mt-8">
             <button
               onClick={prev}
-              className="w-10 h-10 border border-primary-foreground/30 rounded-full flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all"
+              className="w-10 h-10 border border-border rounded-full flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={next}
-              className="w-10 h-10 border border-primary-foreground/30 rounded-full flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all"
+              className="w-10 h-10 border border-border rounded-full flex items-center justify-center hover:bg-secondary hover:border-secondary transition-all"
             >
               <ChevronRight size={18} />
             </button>

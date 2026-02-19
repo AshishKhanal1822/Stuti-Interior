@@ -48,7 +48,7 @@ const Contact = () => {
             reset();
         } catch (error) {
             console.error("EmailJS Error:", error);
-            toast.error("Failed to send message. Please try again later.");
+            toast.error("Failed to send message. Please email us directly at info@stutiinfra.com");
         }
     };
 

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import hero1 from "@/assets/hero-1.jpg";
 import hero2 from "@/assets/hero-2.jpg";
 import hero3 from "@/assets/hero-3.jpg";
@@ -82,15 +83,18 @@ const HeroSection = () => {
             >
               {slides[current].description}
             </motion.p>
-            <motion.a
-              href="#contact"
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9 }}
-              className="inline-flex bg-secondary text-secondary-foreground px-8 py-4 rounded font-body font-semibold text-lg hover:bg-secondary/90 transition-all hover:shadow-lg hover:shadow-secondary/30"
             >
-              Hire the Best Interior Designer
-            </motion.a>
+              <Link
+                to="/contact"
+                className="inline-flex bg-secondary text-secondary-foreground px-8 py-4 rounded font-body font-semibold text-lg hover:bg-secondary/90 transition-all hover:shadow-lg hover:shadow-secondary/30"
+              >
+                Hire the Best Interior Designer
+              </Link>
+            </motion.div>
           </motion.div>
         </AnimatePresence>
       </div>
@@ -117,9 +121,8 @@ const HeroSection = () => {
           <button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`h-1 rounded-full transition-all duration-500 ${
-              i === current ? "w-8 bg-secondary" : "w-4 bg-primary-foreground/40"
-            }`}
+            className={`h-1 rounded-full transition-all duration-500 ${i === current ? "w-8 bg-secondary" : "w-4 bg-primary-foreground/40"
+              }`}
           />
         ))}
       </div>
