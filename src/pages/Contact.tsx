@@ -1,10 +1,56 @@
 import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
+const formSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().regex(/^(98|97)\d{8}$/, "Phone must be 10 digits starting with 98 or 97"),
+    subject: z.string().min(3, "Subject must be at least 3 characters"),
+    message: z.string().min(10, "Message must be at least 10 characters"),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
 const Contact = () => {
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<FormData>({
+        resolver: zodResolver(formSchema),
+    });
+
+    const onSubmit = async (data: FormData) => {
+        try {
+            await emailjs.send(
+                "service_tbz9zy5",
+                "template_gvez0y5",
+                {
+                    from_name: data.name,
+                    from_email: data.email,
+                    phone: data.phone,
+                    subject: data.subject,
+                    message: data.message,
+                },
+                "kASBwywAG3OqFUjZ1"
+            );
+            toast.success("Message sent successfully! We'll get back to you soon.");
+            reset();
+        } catch (error) {
+            console.error("EmailJS Error:", error);
+            toast.error("Failed to send message. Please try again later.");
+        }
+    };
+
     return (
         <div className="min-h-screen">
             <Navbar />
@@ -44,7 +90,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Phone</h4>
-                                            <p className="text-muted-foreground font-body">+91 98765 43210</p>
+                                            <p className="text-muted-foreground font-body">+977 98XXXXXXXX</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
@@ -63,15 +109,12 @@ const Contact = () => {
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Office Address</h4>
                                             <p className="text-muted-foreground font-body leading-relaxed">
-                                                123 Design Street, Creative Plaza,<br />
-                                                New Delhi, India - 110001
+                                                Kathmandu, Nepal
                                             </p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </motion.div>
 
                         {/* Form */}
@@ -82,46 +125,67 @@ const Contact = () => {
                             className="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-muted"
                         >
                             <h3 className="text-2xl font-display font-bold mb-8">Send a Message</h3>
-                            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                            <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label className="text-sm font-body font-medium text-primary/70 ml-1">Full Name</label>
                                         <input
+                                            {...register("name")}
                                             type="text"
                                             placeholder="Jane Doe"
-                                            className="w-full px-5 py-4 border border-border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all"
+                                            className={`w-full px-5 py-4 border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all ${errors.name ? "border-destructive" : "border-border"}`}
                                         />
+                                        {errors.name && <p className="text-destructive text-xs ml-1 mt-1">{errors.name.message}</p>}
                                     </div>
                                     <div className="space-y-2">
                                         <label className="text-sm font-body font-medium text-primary/70 ml-1">Email Address</label>
                                         <input
+                                            {...register("email")}
                                             type="email"
                                             placeholder="jane@example.com"
-                                            className="w-full px-5 py-4 border border-border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all"
+                                            className={`w-full px-5 py-4 border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all ${errors.email ? "border-destructive" : "border-border"}`}
                                         />
+                                        {errors.email && <p className="text-destructive text-xs ml-1 mt-1">{errors.email.message}</p>}
                                     </div>
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-sm font-body font-medium text-primary/70 ml-1">Subject</label>
-                                    <input
-                                        type="text"
-                                        placeholder="Project Inquiry"
-                                        className="w-full px-5 py-4 border border-border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all"
-                                    />
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-body font-medium text-primary/70 ml-1">Phone Number</label>
+                                        <input
+                                            {...register("phone")}
+                                            type="tel"
+                                            placeholder="98XXXXXXXX"
+                                            className={`w-full px-5 py-4 border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all ${errors.phone ? "border-destructive" : "border-border"}`}
+                                        />
+                                        {errors.phone && <p className="text-destructive text-xs ml-1 mt-1">{errors.phone.message}</p>}
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-body font-medium text-primary/70 ml-1">Subject</label>
+                                        <input
+                                            {...register("subject")}
+                                            type="text"
+                                            placeholder="Project Inquiry"
+                                            className={`w-full px-5 py-4 border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all ${errors.subject ? "border-destructive" : "border-border"}`}
+                                        />
+                                        {errors.subject && <p className="text-destructive text-xs ml-1 mt-1">{errors.subject.message}</p>}
+                                    </div>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-sm font-body font-medium text-primary/70 ml-1">Your Message</label>
                                     <textarea
+                                        {...register("message")}
                                         placeholder="Tell us about your project..."
                                         rows={6}
-                                        className="w-full px-5 py-4 border border-border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all resize-none"
+                                        className={`w-full px-5 py-4 border rounded-xl bg-muted/20 font-body text-sm focus:border-secondary focus:ring-1 focus:ring-secondary focus:outline-none transition-all resize-none ${errors.message ? "border-destructive" : "border-border"}`}
                                     />
+                                    {errors.message && <p className="text-destructive text-xs ml-1 mt-1">{errors.message.message}</p>}
                                 </div>
                                 <button
                                     type="submit"
-                                    className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-body font-bold text-lg hover:bg-primary/95 shadow-lg hover:shadow-primary/20 transform hover:-translate-y-1 transition-all duration-300"
+                                    disabled={isSubmitting}
+                                    className="w-full bg-primary text-primary-foreground py-4 rounded-xl font-body font-bold text-lg hover:bg-primary/95 shadow-lg hover:shadow-primary/20 transform hover:-translate-y-1 transition-all duration-300 disabled:opacity-50 disabled:transform-none"
                                 >
-                                    Send Inquiry
+                                    {isSubmitting ? "Sending..." : "Send Inquiry"}
                                 </button>
                             </form>
                         </motion.div>
