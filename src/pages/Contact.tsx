@@ -32,16 +32,17 @@ const Contact = () => {
     const onSubmit = async (data: FormData) => {
         try {
             await emailjs.send(
-                "service_tbz9zy5",
-                "template_gvez0y5",
+                import.meta.env.VITE_EMAILJS_SERVICE_ID,
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
                 {
                     from_name: data.name,
-                    from_email: data.email,
+                    full_name: data.name,
+                    email: data.email,
                     phone: data.phone,
                     subject: data.subject,
                     message: data.message,
                 },
-                "kASBwywAG3OqFUjZ1"
+                import.meta.env.VITE_EMAILJS_PUBLIC_KEY
             );
             toast.success("Message sent successfully! We'll get back to you soon.");
             reset();
