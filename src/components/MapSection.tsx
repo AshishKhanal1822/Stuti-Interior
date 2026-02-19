@@ -18,7 +18,7 @@ const MapSection = () => {
                     </h2>
                     <div className="flex items-center justify-center gap-2 text-muted-foreground font-body">
                         <MapPin size={16} className="text-secondary" />
-                        <span>Kathmandu, Nepal</span>
+                        <span>Lagankhel, Lalitpur, Nepal</span>
                     </div>
                 </motion.div>
             </div>
@@ -32,7 +32,7 @@ const MapSection = () => {
                 className="w-full h-[420px] grayscale hover:grayscale-0 transition-all duration-700"
             >
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56516.31625951923!2d85.29111863945312!3d27.70903994216506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb198a307baabf%3A0xb5137c1bf18db1ea!2sKathmandu%2044600%2C%20Nepal!5e0!3m2!1sen!2snp!4v1700000000000!5m2!1sen!2snp"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.8480285290725!2d85.32023319999999!3d27.660173199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x624486311357dfb9%3A0xd3528e5cd3f0cbc1!2sLagankhel%2C%20Lalitpur%2C%20Nepal!5e0!3m2!1sen!2snp!4v1771492697448!5m2!1sen!2snp"
                     width="100%"
                     height="100%"
                     style={{ border: 0, display: "block" }}

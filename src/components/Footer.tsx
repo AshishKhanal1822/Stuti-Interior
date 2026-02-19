@@ -60,13 +60,13 @@ const Footer = () => {
             <h4 className="font-display font-bold text-lg mb-4 text-secondary">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
-                <Phone size={14} className="text-secondary" /> +91 98765 43210
+                <Phone size={14} className="text-secondary" /> +977 9713309341
               </div>
               <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
-                <Mail size={14} className="text-secondary" /> info@stutiinfra.com
+                <Mail size={14} className="text-secondary" /> stutiinfra2@gmail.com
               </div>
-              <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
-                <MapPin size={14} className="text-secondary" /> India
+              <div className="flex items-start gap-2 text-primary-foreground/60 font-body text-sm">
+                <MapPin size={14} className="text-secondary mt-1 flex-shrink-0" /> Lagankhel, Lalitpur, Nepal
               </div>
               <div className="flex items-center gap-4 pt-4">
                 <a href="#" className="text-primary-foreground/60 hover:text-secondary transition-colors">

@@ -40,9 +40,6 @@ const ProcessSection = () => {
                 {step.num}
               </span>
               <div className="relative z-10">
-                <div className="w-10 h-10 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
-                  <span className="text-secondary font-display font-bold">{step.num}</span>
-                </div>
                 <h4 className="font-display text-xl font-bold mb-2">{step.title}</h4>
                 <p className="text-muted-foreground font-body text-sm">{step.desc}</p>
               </div>

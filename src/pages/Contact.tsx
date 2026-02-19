@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { motion } from "framer-motion";
 import { Phone, Mail, MapPin } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -91,7 +90,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Phone</h4>
-                                            <p className="text-muted-foreground font-body">+977 98XXXXXXXX</p>
+                                            <p className="text-muted-foreground font-body">+977 9713309341</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
@@ -100,7 +99,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Email</h4>
-                                            <p className="text-muted-foreground font-body">info@stutiinfra.com</p>
+                                            <p className="text-muted-foreground font-body">stutiinfra2@gmail.com</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
@@ -110,7 +109,7 @@ const Contact = () => {
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Office Address</h4>
                                             <p className="text-muted-foreground font-body leading-relaxed">
-                                                Kathmandu, Nepal
+                                                Lagankhel Lalitpur, Nepal
                                             </p>
                                         </div>
                                     </div>
@@ -200,7 +199,7 @@ const Contact = () => {
                         className="w-full h-[500px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white grayscale hover:grayscale-0 transition-all duration-700"
                     >
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14008.114825663366!2d77.206512!3d28.628223!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd37b741d057%3A0xc36768ec5181747c!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.8480285290725!2d85.32023319999999!3d27.660173199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x624486311357dfb9%3A0xd3528e5cd3f0cbc1!2sBusiness%20Booster%20Nepal!5e0!3m2!1sen!2snp!4v1771492697448!5m2!1sen!2snp"
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}

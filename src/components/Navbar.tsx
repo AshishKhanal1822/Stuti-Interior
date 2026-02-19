@@ -30,10 +30,10 @@ const Navbar = () => {
       {/* Top bar */}
       <div className="hidden md:flex items-center justify-end gap-6 bg-primary text-primary-foreground px-8 py-2 text-sm font-body">
         <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-secondary transition-colors">
-          <Phone size={14} /> +91 98765 43210
+          <Phone size={14} /> +977 9713309341
         </a>
-        <a href="mailto:info@stutiinfra.com" className="flex items-center gap-2 hover:text-secondary transition-colors">
-          <Mail size={14} /> info@stutiinfra.com
+        <a href="mailto:stutiinfra2@gmail.com" className="flex items-center gap-2 hover:text-secondary transition-colors">
+          <Mail size={14} /> stutiinfra2@gmail.com
         </a>
       </div>
       <motion.nav
