@@ -4,14 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import logo from "@/assets/stuti-infra-logo.jpeg";
 
-const navItems = [
-  { name: "Home", path: "/", type: "page" },
-  { name: "About", path: "/about", type: "page" },
-  { name: "Services", path: "services", type: "section" },
-  { name: "Projects", path: "/projects", type: "page" },
-  { name: "Process", path: "process", type: "section" },
-  { name: "Testimonials", path: "testimonials", type: "section" },
-];
+import { navItems } from "@/constants/navItems";
+import { contactInfo } from "@/constants/contact";
+import { LAYOUT_CONSTANTS } from "@/constants/layout";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,11 +32,11 @@ const Navbar = () => {
     <>
       {/* Top bar */}
       <div className="hidden md:flex items-center justify-end gap-6 bg-primary text-primary-foreground px-8 py-2 text-sm font-body">
-        <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-secondary transition-colors">
-          <Phone size={14} /> +977 9713309341
+        <a href={`tel:${contactInfo.phone}`} className="flex items-center gap-2 hover:text-secondary transition-colors">
+          <Phone size={14} /> {contactInfo.phone}
         </a>
-        <a href="mailto:stutiinfra2@gmail.com" className="flex items-center gap-2 hover:text-secondary transition-colors">
-          <Mail size={14} /> stutiinfra2@gmail.com
+        <a href={`mailto:${contactInfo.email}`} className="flex items-center gap-2 hover:text-secondary transition-colors">
+          <Mail size={14} /> {contactInfo.email}
         </a>
       </div>
       <motion.nav
@@ -77,7 +72,7 @@ const Navbar = () => {
                       e.preventDefault();
                       const element = document.getElementById(item.path);
                       if (element) {
-                        const navbarHeight = 90;
+                        const navbarHeight = LAYOUT_CONSTANTS.NAVBAR_HEIGHT;
                         const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
                         window.scrollTo({ top: targetPosition, behavior: "smooth" });
                         // Update hash without jump
@@ -141,7 +136,7 @@ const Navbar = () => {
                           e.preventDefault();
                           const element = document.getElementById(item.path);
                           if (element) {
-                            const navbarHeight = 90;
+                            const navbarHeight = LAYOUT_CONSTANTS.NAVBAR_HEIGHT;
                             const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
                             window.scrollTo({ top: targetPosition, behavior: "smooth" });
                             window.history.pushState(null, "", `/#${item.path}`);

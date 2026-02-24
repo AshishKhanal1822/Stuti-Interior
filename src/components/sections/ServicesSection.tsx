@@ -1,34 +1,10 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
-const tabs = [
-  {
-    id: "design",
-    label: "Designing & Planning",
-    items: [
-      { num: "01", title: "Space Planning" },
-      { num: "02", title: "3D Visualization" },
-      { num: "03", title: "Technical Details" },
-      { num: "04", title: "Cost Estimation" },
-    ],
-  },
-  {
-    id: "build",
-    label: "Build (Execution)",
-    items: [
-      { num: "01", title: "Full Supervision" },
-      { num: "02", title: "Complete Build" },
-    ],
-  },
-  {
-    id: "turnkey",
-    label: "Turnkey-Project Solutions",
-    items: [{ num: "01", title: "Design + Build" }],
-  },
-];
+import { serviceTabs as tabs } from "@/constants/services";
 
 const ServicesSection = () => {
-  const [activeTab, setActiveTab] = useState("design");
+  const [activeTab, setActiveTab] = useState("furnishing");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const activeItems = tabs.find((t) => t.id === activeTab)?.items ?? [];
@@ -61,8 +37,8 @@ const ServicesSection = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-6 py-3 rounded font-body text-sm font-medium transition-all ${activeTab === tab.id
-                  ? "bg-secondary text-secondary-foreground"
-                  : "border border-primary-foreground/20 text-primary-foreground/70 hover:border-secondary hover:text-secondary"
+                ? "bg-secondary text-secondary-foreground"
+                : "border border-primary-foreground/20 text-primary-foreground/70 hover:border-secondary hover:text-secondary"
                 }`}
             >
               {tab.label}
@@ -76,7 +52,12 @@ const ServicesSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-4xl mx-auto"
+          className={`grid gap-6 max-w-5xl mx-auto ${activeItems.length === 6
+            ? "grid-cols-1 md:grid-cols-3"
+            : activeItems.length === 5 || activeItems.length === 4
+              ? "grid-cols-1 md:grid-cols-2"
+              : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+            }`}
         >
           {activeItems.map((item, i) => (
             <motion.div
@@ -84,10 +65,15 @@ const ServicesSection = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.15 }}
-              className="border border-primary-foreground/10 rounded-lg p-6 hover:border-secondary/50 transition-all group text-center"
+              className={`border border-primary-foreground/10 rounded-lg p-6 hover:border-secondary/50 transition-all group text-center ${activeItems.length === 5 && i === 4
+                ? "md:col-span-2 md:max-w-sm md:mx-auto w-full"
+                : ""
+                }`}
             >
               <span className="text-secondary font-display text-3xl font-bold">{item.num}</span>
-              <h4 className="font-display text-lg mt-3">{item.title}</h4>
+              <h4 className="font-display text-lg font-bold mt-3 group-hover:text-secondary transition-colors duration-300">
+                {item.title}
+              </h4>
             </motion.div>
           ))}
         </motion.div>

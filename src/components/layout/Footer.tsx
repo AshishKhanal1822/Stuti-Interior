@@ -2,6 +2,8 @@ import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import logo from "@/assets/stuti-infra-logo.jpeg";
 
+import { contactInfo } from "@/constants/contact";
+
 const Footer = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
@@ -60,21 +62,54 @@ const Footer = () => {
             <h4 className="font-display font-bold text-lg mb-4 text-secondary">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
-                <Phone size={14} className="text-secondary" /> +977 9713309341
+                <Phone size={14} className="text-secondary" /> {contactInfo.phone}
               </div>
               <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
-                <Mail size={14} className="text-secondary" /> stutiinfra2@gmail.com
+                <Mail size={14} className="text-secondary" /> {contactInfo.email}
               </div>
               <div className="flex items-start gap-2 text-primary-foreground/60 font-body text-sm">
-                <MapPin size={14} className="text-secondary mt-1 flex-shrink-0" /> Lagankhel, Lalitpur, Nepal
+                <MapPin size={14} className="text-secondary mt-1 flex-shrink-0" /> {contactInfo.address}
               </div>
               <div className="flex items-center gap-4 pt-4">
-                <a href="#" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+                <a
+                  href={contactInfo.socials.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-foreground/60 hover:text-secondary transition-colors"
+                >
                   <Instagram size={20} />
                 </a>
-                <a href="#" className="text-primary-foreground/60 hover:text-secondary transition-colors">
+                <a
+                  href={contactInfo.socials.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary-foreground/60 hover:text-secondary transition-colors"
+                >
                   <Facebook size={20} />
                 </a>
+                {contactInfo.socials.linkedin !== "#" && (
+                  <a
+                    href={contactInfo.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary-foreground/60 hover:text-secondary transition-colors"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="w-5 h-5"
+                    >
+                      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                      <rect width="4" height="12" x="2" y="9" />
+                      <circle cx="4" cy="4" r="2" />
+                    </svg>
+                  </a>
+                )}
+                {/* TikTok icon replaced with a generic social path if needed, keeping current SVG as a placeholder or secondary social */}
                 <a href="#" className="text-primary-foreground/60 hover:text-secondary transition-colors">
                   <svg
                     viewBox="0 0 24 24"

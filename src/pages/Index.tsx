@@ -1,15 +1,16 @@
-import Navbar from "@/components/Navbar";
-import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
-import ServicesSection from "@/components/ServicesSection";
-import ProjectsSection from "@/components/ProjectsSection";
-import ProcessSection from "@/components/ProcessSection";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import MapSection from "@/components/MapSection";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/layout/Navbar";
+import HeroSection from "@/components/sections/HeroSection";
+import AboutSection from "@/components/sections/AboutSection";
+import ServicesSection from "@/components/sections/ServicesSection";
+import ProjectsSection from "@/components/sections/ProjectsSection";
+import ProcessSection from "@/components/sections/ProcessSection";
+import TestimonialsSection from "@/components/sections/TestimonialsSection";
+import MapSection from "@/components/sections/MapSection";
+import Footer from "@/components/layout/Footer";
 
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { LAYOUT_CONSTANTS } from "@/constants/layout";
 
 const Index = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const Index = () => {
         const element = document.getElementById(targetId);
 
         if (element) {
-          const navbarHeight = 90; // Approximate height of the fixed navbar
+          const navbarHeight = LAYOUT_CONSTANTS.NAVBAR_HEIGHT;
           const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
 
           window.scrollTo({

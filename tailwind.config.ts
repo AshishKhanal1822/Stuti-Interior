@@ -13,9 +13,10 @@ export default {
       },
     },
     fontFamily: {
-        display: ['"Playfair Display"', 'serif'],
-        body: ['Inter', 'sans-serif'],
-      },
+      display: ['"Playfair Display"', 'serif'],
+      body: ['Inter', 'sans-serif'],
+      cursive: ['"Dancing Script"', 'cursive'],
+    },
     extend: {
       colors: {
         border: "hsl(var(--border))",

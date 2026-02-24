@@ -5,8 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import emailjs from "@emailjs/browser";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+
+import { contactInfo } from "@/constants/contact";
 
 const formSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters"),
@@ -47,7 +49,7 @@ const Contact = () => {
             reset();
         } catch (error) {
             console.error("EmailJS Error:", error);
-            toast.error("Failed to send message. Please email us directly at info@stutiinfra.com");
+            toast.error(`Failed to send message. Please email us directly at ${contactInfo.email}`);
         }
     };
 
@@ -80,7 +82,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Phone</h4>
-                                            <p className="text-muted-foreground font-body">+977 9713309341</p>
+                                            <p className="text-muted-foreground font-body">{contactInfo.phone}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
@@ -89,7 +91,7 @@ const Contact = () => {
                                         </div>
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Email</h4>
-                                            <p className="text-muted-foreground font-body">stutiinfra2@gmail.com</p>
+                                            <p className="text-muted-foreground font-body">{contactInfo.email}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-4">
@@ -99,7 +101,7 @@ const Contact = () => {
                                         <div>
                                             <h4 className="font-display font-bold text-lg mb-1">Office Address</h4>
                                             <p className="text-muted-foreground font-body leading-relaxed">
-                                                Lagankhel Lalitpur, Nepal
+                                                {contactInfo.address}
                                             </p>
                                         </div>
                                     </div>
@@ -181,7 +183,7 @@ const Contact = () => {
                         className="w-full h-[500px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white grayscale hover:grayscale-0 transition-all duration-700"
                     >
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.8480285290725!2d85.32023319999999!3d27.660173199999992!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x624486311357dfb9%3A0xd3528e5cd3f0cbc1!2sBusiness%20Booster%20Nepal!5e0!3m2!1sen!2snp!4v1771492697448!5m2!1sen!2snp"
+                            src={contactInfo.mapUrl}
                             width="100%"
                             height="100%"
                             style={{ border: 0 }}

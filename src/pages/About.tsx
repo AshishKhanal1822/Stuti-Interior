@@ -1,10 +1,7 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import about1 from "@/assets/about-1.jpg";
-import about2 from "@/assets/about-2.jpg";
-import hero1 from "@/assets/hero-1.jpg";
-import hero2 from "@/assets/hero-2.jpg";
+import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
+import { aboutContent } from "@/constants/about";
 
 const About = () => {
     return (
@@ -21,9 +18,7 @@ const About = () => {
                         </h1>
                         <div className="max-w-4xl mx-auto">
                             <p className="text-muted-foreground font-body text-xl leading-relaxed mb-8">
-                                Stuti Infra was founded on the principle that every space has a story to tell.
-                                We are more than just designers and builders; we are curators of environments
-                                that inspire, comfort, and elevate human experience.
+                                {aboutContent.intro}
                             </p>
                         </div>
                     </div>
@@ -42,10 +37,7 @@ const About = () => {
                                     <span className="w-12 h-[2px] bg-secondary"></span> Our Mission
                                 </h2>
                                 <p className="text-muted-foreground font-body text-lg leading-relaxed">
-                                    To design and deliver personalized, functional, and innovative spaces that elevate living.
-                                    We believe that great design should be accessible, sustainable, and reflective of the
-                                    people who inhabit it. Our commitment to excellence drives every project we undertake,
-                                    ensuring that we exceed client expectations through creative solutions and meticulous craftsmanship.
+                                    {aboutContent.mission}
                                 </p>
                             </div>
 
@@ -54,11 +46,7 @@ const About = () => {
                                     <span className="w-12 h-[2px] bg-secondary"></span> Our Vision
                                 </h2>
                                 <p className="text-muted-foreground font-body text-lg leading-relaxed">
-                                    To become the ultimate benchmark in the architecture and interior design industry.
-                                    We aspire to be recognized globally for our design excellence, commitment to
-                                    sustainability, and client-centered creativity. Our goal is to shape
-                                    inspiring spaces across residential, commercial, and hospitality sectors,
-                                    leaving a lasting positive impact on the built environment.
+                                    {aboutContent.vision}
                                 </p>
                             </div>
                         </motion.div>
@@ -70,28 +58,22 @@ const About = () => {
                             viewport={{ once: true }}
                             className="grid grid-cols-2 gap-4"
                         >
-                            <img src={about1} alt="Craftsmanship" className="rounded-2xl shadow-xl h-80 w-full object-cover" />
-                            <img src={hero1} alt="Modern Design" className="rounded-2xl shadow-xl h-80 w-full object-cover mt-8" />
-                            <img src={hero2} alt="Attention to Detail" className="rounded-2xl shadow-xl h-80 w-full object-cover -mt-8" />
-                            <img src={about2} alt="Finished Space" className="rounded-2xl shadow-xl h-80 w-full object-cover" />
+                            <img src={aboutContent.images.about1} alt="Craftsmanship" className="rounded-2xl shadow-xl h-80 w-full object-cover" />
+                            <img src={aboutContent.images.hero1} alt="Modern Design" className="rounded-2xl shadow-xl h-80 w-full object-cover mt-8" />
+                            <img src={aboutContent.images.hero2} alt="Attention to Detail" className="rounded-2xl shadow-xl h-80 w-full object-cover -mt-8" />
+                            <img src={aboutContent.images.about2} alt="Finished Space" className="rounded-2xl shadow-xl h-80 w-full object-cover" />
                         </motion.div>
                     </div>
 
                     {/* Stats/Values Section */}
                     <div className="bg-primary text-primary-foreground rounded-[2rem] p-12 md:p-20 mb-24">
                         <div className="grid md:grid-cols-3 gap-12 text-center">
-                            <div>
-                                <h3 className="text-5xl font-display font-bold text-secondary mb-4">10+</h3>
-                                <p className="font-body text-sm uppercase tracking-[0.2em] opacity-80">Years of Excellence</p>
-                            </div>
-                            <div>
-                                <h3 className="text-5xl font-display font-bold text-secondary mb-4">500+</h3>
-                                <p className="font-body text-sm uppercase tracking-[0.2em] opacity-80">Projects Completed</p>
-                            </div>
-                            <div>
-                                <h3 className="text-5xl font-display font-bold text-secondary mb-4">100%</h3>
-                                <p className="font-body text-sm uppercase tracking-[0.2em] opacity-80">Client Satisfaction</p>
-                            </div>
+                            {aboutContent.stats.map((stat, i) => (
+                                <div key={i}>
+                                    <h3 className="text-5xl font-display font-bold text-secondary mb-4">{stat.value}</h3>
+                                    <p className="font-body text-sm uppercase tracking-[0.2em] opacity-80">{stat.label}</p>
+                                </div>
+                            ))}
                         </div>
                     </div>
 
@@ -99,11 +81,7 @@ const About = () => {
                     <div className="text-center mb-16">
                         <h2 className="text-4xl font-display font-bold mb-12">Why Choose Stuti Infra?</h2>
                         <div className="grid md:grid-cols-3 gap-8">
-                            {[
-                                { title: "Expert Architects", desc: "Our team consists of highly qualified professionals with years of industry experience." },
-                                { title: "Sustainable Design", desc: "We prioritize eco-friendly materials and energy-efficient solutions in every project." },
-                                { title: "End-to-End Service", desc: "From concept to completion, we handle every detail so you don't have to." }
-                            ].map((item, i) => (
+                            {aboutContent.whyChooseUs.map((item, i) => (
                                 <motion.div
                                     key={i}
                                     initial={{ opacity: 0, y: 20 }}
