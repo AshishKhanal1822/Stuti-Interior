@@ -2,6 +2,7 @@ import { Phone, Mail, MapPin, Instagram, Facebook } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import logo from "@/assets/stuti-infra-logo.jpeg";
 
+import { serviceTabs } from "@/constants/services";
 import { contactInfo } from "@/constants/contact";
 
 const Footer = () => {
@@ -17,22 +18,22 @@ const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 md:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
           {/* Brand */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-3">
             <div className="flex items-center gap-3 mb-4">
               <img src={logo} alt="Stuti Infra" className="h-12 w-12 rounded-full object-cover" />
               <span className="font-display text-xl font-bold">
                 Stuti <span className="text-secondary">Infra</span>
               </span>
             </div>
-            <p className="text-primary-foreground/60 font-body text-sm leading-relaxed">
+            <p className="text-primary-foreground/60 font-body text-sm leading-relaxed max-w-xs">
               Transforming spaces into unique, stylish environments tailored to individual preferences and budgets.
             </p>
           </div>
 
           {/* Quick Links */}
-          <div>
+          <div className="md:col-span-2">
             <h4 className="font-display font-bold text-lg mb-4 text-secondary">Quick Links</h4>
             <div className="flex flex-col gap-2">
               {["Home", "About", "Services", "Projects"].map((item) => (
@@ -48,17 +49,17 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div>
+          <div className="md:col-span-4">
             <h4 className="font-display font-bold text-lg mb-4 text-secondary">Services</h4>
             <div className="flex flex-col gap-2">
-              {["Interior Design", "Space Planning", "3D Visualization", "Turnkey Projects", "Renovation"].map((s) => (
-                <span key={s} className="text-primary-foreground/60 font-body text-sm">{s}</span>
+              {serviceTabs.map((tab) => (
+                <span key={tab.id} className="text-primary-foreground/60 font-body text-sm">{tab.label}</span>
               ))}
             </div>
           </div>
 
           {/* Contact */}
-          <div>
+          <div className="md:col-span-3">
             <h4 className="font-display font-bold text-lg mb-4 text-secondary">Contact</h4>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-primary-foreground/60 font-body text-sm">
