@@ -57,12 +57,7 @@ const Contact = () => {
 
             <main className="pt-32 pb-20">
                 <div className="container mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-center mb-16"
-                    >
+                    <div className="text-center mb-16">
                         <p className="text-secondary font-body text-sm tracking-[0.3em] uppercase mb-4">Get In Touch</p>
                         <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
                             Let's Start Your <span className="text-secondary">Project</span>
@@ -71,16 +66,11 @@ const Contact = () => {
                             Have a vision for your space? We're here to help you bring it to life.
                             Reach out to us through any of the channels below.
                         </p>
-                    </motion.div>
+                    </div>
 
                     <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-20">
                         {/* Contact Info */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -40 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="space-y-10"
-                        >
+                        <div className="space-y-10">
                             <div className="bg-muted/30 p-8 rounded-2xl border border-muted hover:border-secondary/30 transition-colors">
                                 <h3 className="text-2xl font-display font-bold mb-8">Contact Information</h3>
                                 <div className="space-y-6">
@@ -115,15 +105,10 @@ const Contact = () => {
                                     </div>
                                 </div>
                             </div>
-                        </motion.div>
+                        </div>
 
                         {/* Form */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 40 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8 }}
-                            className="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-muted"
-                        >
+                        <div className="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-muted">
                             <h3 className="text-2xl font-display font-bold mb-8">Send a Message</h3>
                             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -188,14 +173,11 @@ const Contact = () => {
                                     {isSubmitting ? "Sending..." : "Send Inquiry"}
                                 </button>
                             </form>
-                        </motion.div>
+                        </div>
                     </div>
 
                     {/* Map */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1 }}
+                    <div
                         className="w-full h-[500px] rounded-[2rem] overflow-hidden shadow-2xl border-4 border-white grayscale hover:grayscale-0 transition-all duration-700"
                     >
                         <iframe
@@ -207,12 +189,12 @@ const Contact = () => {
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                         ></iframe>
-                    </motion.div>
+                    </div>
                 </div>
-            </main>
+            </main >
 
             <Footer />
-        </div>
+        </div >
     );
 };
 

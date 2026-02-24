@@ -34,9 +34,9 @@ const ProcessSection = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="relative bg-card rounded-lg p-8 shadow-sm hover:shadow-xl transition-all group border border-transparent hover:border-secondary/30"
+              className="bg-card rounded-lg p-8 shadow-sm hover:shadow-xl transition-all group border border-transparent hover:border-secondary/30 relative overflow-hidden"
             >
-              <span className="text-6xl font-display font-bold text-muted/80 group-hover:text-secondary/20 transition-colors absolute top-4 right-6">
+              <span className="text-6xl font-display font-bold text-muted/20 group-hover:text-secondary/20 transition-colors absolute -top-2 right-2">
                 {step.num}
               </span>
               <div className="relative z-10">

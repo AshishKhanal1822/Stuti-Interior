@@ -4,24 +4,19 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Priya Sharma",
-    location: "Mumbai",
+    name: "Satish Sharma",
+    location: "Lalitpur",
     text: "I am amazed by the transformation that Stuti Infra brought to my space. They took a dull and outdated space and turned it into a modern and inviting area that my family and I love spending time in.",
   },
   {
-    name: "Rahul Gupta",
-    location: "Delhi",
+    name: "Bhupendra Yadav",
+    location: "Kathmandu",
     text: "Working with Stuti Infra was an absolute pleasure! Their team truly understood my vision and transformed my space into a stunning and functional environment. The attention to detail exceeded my expectations.",
   },
   {
-    name: "Anita Patel",
-    location: "Ahmedabad",
+    name: "Bishnu Sanjel",
+    location: "Bhaktapur",
     text: "I cannot express how thrilled I am with the results of my home renovation by Stuti Infra. From the initial consultation to the final reveal, their team guided me through every step with ease.",
-  },
-  {
-    name: "Vikram Singh",
-    location: "Jaipur",
-    text: "Stuti Infra exceeded my expectations in every way possible. Their team's creativity and expertise in space planning and design transformed our restaurant into a stylish and functional space.",
   },
 ];
 

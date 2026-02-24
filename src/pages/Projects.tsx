@@ -33,12 +33,7 @@ const Projects = () => {
 
             <main className="pt-32 pb-20">
                 <div className="container mx-auto px-4">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-center mb-16"
-                    >
+                    <div className="text-center mb-16">
                         <p className="text-secondary font-body text-sm tracking-[0.3em] uppercase mb-4">Portfolio</p>
                         <h1 className="text-4xl md:text-6xl font-display font-bold mb-6">
                             Our Complete <span className="text-secondary">Work Gallery</span>
@@ -47,15 +42,12 @@ const Projects = () => {
                             Explore our extensive portfolio of residential and commercial interior design projects.
                             Each space is crafted with passion and precision.
                         </p>
-                    </motion.div>
+                    </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                         {allProjects.map((project, i) => (
-                            <motion.div
+                            <div
                                 key={`${project.title}-${i}`}
-                                initial={{ opacity: 0, y: 30 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.6, delay: i * 0.1 }}
                                 className="group relative overflow-hidden rounded-xl shadow-lg cursor-pointer"
                             >
                                 <div className="aspect-[4/5] overflow-hidden">
@@ -76,14 +68,14 @@ const Projects = () => {
                                         <div className="w-12 h-1 bg-secondary mt-4 transition-all duration-500 group-hover:w-full"></div>
                                     </div>
                                 </div>
-                            </motion.div>
+                            </div>
                         ))}
                     </div>
                 </div>
-            </main>
+            </main >
 
             <Footer />
-        </div>
+        </div >
     );
 };
 

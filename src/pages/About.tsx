@@ -14,12 +14,7 @@ const About = () => {
             <main className="pt-32 pb-20">
                 <div className="container mx-auto px-4">
                     {/* Hero Section */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.8 }}
-                        className="text-center mb-20"
-                    >
+                    <div className="text-center mb-20">
                         <p className="text-secondary font-body text-sm tracking-[0.3em] uppercase mb-4">Our Story</p>
                         <h1 className="text-4xl md:text-7xl font-display font-bold mb-8">
                             Designing Spaces, <span className="text-secondary">Building Dreams.</span>
@@ -31,7 +26,7 @@ const About = () => {
                                 that inspire, comfort, and elevate human experience.
                             </p>
                         </div>
-                    </motion.div>
+                    </div>
 
                     {/* Mission & Vision Detailed */}
                     <div className="grid lg:grid-cols-2 gap-16 mb-24 items-center">

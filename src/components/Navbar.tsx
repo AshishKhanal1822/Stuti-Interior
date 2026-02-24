@@ -4,7 +4,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import logo from "@/assets/stuti-infra-logo.jpeg";
 
-const navItems = ["Home", "About", "Services", "Projects", "Process", "Testimonials"];
+const navItems = [
+  { name: "Home", path: "/", type: "page" },
+  { name: "About", path: "/about", type: "page" },
+  { name: "Services", path: "services", type: "section" },
+  { name: "Projects", path: "/projects", type: "page" },
+  { name: "Process", path: "process", type: "section" },
+  { name: "Testimonials", path: "testimonials", type: "section" },
+];
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +26,11 @@ const Navbar = () => {
   const location = useLocation();
   const isHomePage = location.pathname === "/";
 
-  const getLink = (item: string) => {
-    const id = item.toLowerCase();
-    if (id === "home") return isHomePage ? "#home" : "/";
-    return isHomePage ? `#${id}` : `/#${id}`;
+  const scrollToTop = (e: React.MouseEvent) => {
+    if (isHomePage) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   };
 
   return (
@@ -41,7 +49,7 @@ const Navbar = () => {
           }`}
       >
         <div className="container mx-auto flex items-center justify-between px-4 md:px-8 py-3">
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" onClick={scrollToTop} className="flex items-center gap-3">
             <img src={logo} alt="Stuti Infra" className="h-12 w-12 rounded-full object-cover" />
             <span className="text-primary-foreground font-display text-xl font-bold tracking-wide">
               Stuti <span className="text-secondary">Infra</span>
@@ -51,13 +59,24 @@ const Navbar = () => {
           {/* Desktop nav */}
           <div className="hidden lg:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href={getLink(item)}
-                className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body"
-              >
-                {item}
-              </a>
+              item.type === "page" ? (
+                <Link
+                  key={item.name}
+                  to={item.path}
+                  onClick={item.name === "Home" ? scrollToTop : undefined}
+                  className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={`/#${item.path}`}
+                  className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body"
+                >
+                  {item.name}
+                </Link>
+              )
             ))}
           </div>
 
@@ -87,14 +106,28 @@ const Navbar = () => {
             >
               <div className="px-4 py-6 flex flex-col gap-4">
                 {navItems.map((item) => (
-                  <a
-                    key={item}
-                    href={getLink(item)}
-                    onClick={() => setIsOpen(false)}
-                    className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body py-2"
-                  >
-                    {item}
-                  </a>
+                  item.type === "page" ? (
+                    <Link
+                      key={item.name}
+                      to={item.path}
+                      onClick={() => {
+                        setIsOpen(false);
+                        if (item.name === "Home") scrollToTop({ preventDefault: () => { } } as any);
+                      }}
+                      className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body py-2"
+                    >
+                      {item.name}
+                    </Link>
+                  ) : (
+                    <Link
+                      key={item.name}
+                      to={`/#${item.path}`}
+                      onClick={() => setIsOpen(false)}
+                      className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body py-2"
+                    >
+                      {item.name}
+                    </Link>
+                  )
                 ))}
                 <Link
                   to="/contact"

@@ -27,11 +27,54 @@ const slides = [
   },
 ];
 
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+    scale: 1.2,
+  }),
+  center: {
+    zIndex: 1,
+    x: 0,
+    opacity: 1,
+    scale: 1,
+  },
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0,
+    scale: 1.1,
+  }),
+};
+
+const contentVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 100 : -100,
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? 100 : -100,
+    opacity: 0,
+  }),
+};
+
 const HeroSection = () => {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const next = useCallback(() => setCurrent((p) => (p + 1) % slides.length), []);
-  const prev = useCallback(() => setCurrent((p) => (p - 1 + slides.length) % slides.length), []);
+  const next = useCallback(() => {
+    setDirection(1);
+    setCurrent((p) => (p + 1) % slides.length);
+  }, []);
+
+  const prev = useCallback(() => {
+    setDirection(-1);
+    setCurrent((p) => (p - 1 + slides.length) % slides.length);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(next, 6000);
@@ -39,14 +82,20 @@ const HeroSection = () => {
   }, [next]);
 
   return (
-    <section id="home" className="relative h-screen overflow-hidden">
-      <AnimatePresence mode="wait">
+    <section id="home" className="relative h-screen overflow-hidden bg-primary">
+      <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={current}
-          initial={{ opacity: 0, scale: 1.1 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 120, damping: 20 },
+            opacity: { duration: 0.6, ease: "easeInOut" },
+            scale: { duration: 1.5, ease: "easeOut" }
+          }}
           className="absolute inset-0"
         >
           <img
@@ -54,18 +103,25 @@ const HeroSection = () => {
             alt={slides[current].title}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-primary/70" />
+          {/* Premium Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/50 to-primary/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary/60 via-transparent to-transparent" />
         </motion.div>
       </AnimatePresence>
 
       <div className="relative z-10 flex items-center h-full container mx-auto px-4 md:px-8">
-        <AnimatePresence mode="wait">
+        <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={current}
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            custom={direction}
+            variants={contentVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{
+              x: { type: "spring", stiffness: 100, damping: 20 },
+              opacity: { duration: 0.5 }
+            }}
             className="max-w-3xl"
           >
             <motion.h1
@@ -78,7 +134,7 @@ const HeroSection = () => {
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
+              transition={{ delay: 0.3 }}
               className="text-primary-foreground/80 text-lg md:text-xl font-body mb-8 max-w-xl"
             >
               {slides[current].description}
@@ -86,7 +142,7 @@ const HeroSection = () => {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.9 }}
+              transition={{ delay: 0.5 }}
             >
               <Link
                 to="/contact"
@@ -100,28 +156,31 @@ const HeroSection = () => {
       </div>
 
       {/* Nav arrows */}
-      <div className="absolute bottom-8 right-8 z-10 flex gap-3">
+      <div className="absolute bottom-12 right-12 z-20 flex gap-4">
         <button
           onClick={prev}
-          className="w-12 h-12 border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-secondary hover:border-secondary transition-all rounded"
+          className="w-14 h-14 border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-secondary hover:border-secondary transition-all rounded-full group bg-primary/20 backdrop-blur-sm"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft className="group-hover:-translate-x-1 transition-transform" size={24} />
         </button>
         <button
           onClick={next}
-          className="w-12 h-12 border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-secondary hover:border-secondary transition-all rounded"
+          className="w-14 h-14 border border-primary-foreground/30 flex items-center justify-center text-primary-foreground hover:bg-secondary hover:border-secondary transition-all rounded-full group bg-primary/20 backdrop-blur-sm"
         >
-          <ChevronRight size={20} />
+          <ChevronRight className="group-hover:translate-x-1 transition-transform" size={24} />
         </button>
       </div>
 
       {/* Slide indicators */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 flex gap-3">
         {slides.map((_, i) => (
           <button
             key={i}
-            onClick={() => setCurrent(i)}
-            className={`h-1 rounded-full transition-all duration-500 ${i === current ? "w-8 bg-secondary" : "w-4 bg-primary-foreground/40"
+            onClick={() => {
+              setDirection(i > current ? 1 : -1);
+              setCurrent(i);
+            }}
+            className={`h-1.5 rounded-full transition-all duration-700 ${i === current ? "w-12 bg-secondary" : "w-6 bg-primary-foreground/20 hover:bg-primary-foreground/40"
               }`}
           />
         ))}
@@ -131,3 +190,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
