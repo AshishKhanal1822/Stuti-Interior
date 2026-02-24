@@ -72,6 +72,19 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={`/#${item.path}`}
+                  onClick={(e) => {
+                    if (isHomePage) {
+                      e.preventDefault();
+                      const element = document.getElementById(item.path);
+                      if (element) {
+                        const navbarHeight = 90;
+                        const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                        window.scrollTo({ top: targetPosition, behavior: "smooth" });
+                        // Update hash without jump
+                        window.history.pushState(null, "", `/#${item.path}`);
+                      }
+                    }
+                  }}
                   className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body"
                 >
                   {item.name}
@@ -122,7 +135,19 @@ const Navbar = () => {
                     <Link
                       key={item.name}
                       to={`/#${item.path}`}
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        setIsOpen(false);
+                        if (isHomePage) {
+                          e.preventDefault();
+                          const element = document.getElementById(item.path);
+                          if (element) {
+                            const navbarHeight = 90;
+                            const targetPosition = element.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                            window.scrollTo({ top: targetPosition, behavior: "smooth" });
+                            window.history.pushState(null, "", `/#${item.path}`);
+                          }
+                        }
+                      }}
                       className="text-primary-foreground/80 hover:text-secondary transition-colors text-sm font-medium tracking-wider uppercase font-body py-2"
                     >
                       {item.name}
