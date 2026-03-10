@@ -2,11 +2,27 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { aboutContent } from "@/constants/about";
+import { aboutContent as localAbout } from "@/constants/about";
+import { useSanityAbout } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanityClient";
 
 const AboutSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const { about: sanityAbout, loading } = useSanityAbout();
+
+  const about = sanityAbout ? {
+    intro: sanityAbout.intro,
+    mission: sanityAbout.mission,
+    vision: sanityAbout.vision,
+    images: {
+      about1: sanityAbout.images?.[0] ? urlFor(sanityAbout.images[0]).width(600).url() : localAbout.images.about1,
+      about2: sanityAbout.images?.[1] ? urlFor(sanityAbout.images[1]).width(400).url() : localAbout.images.about2,
+    }
+  } : localAbout;
+
+
 
   return (
     <section id="about" className="section-padding bg-muted/30" ref={ref}>
@@ -20,7 +36,7 @@ const AboutSection = () => {
         >
           <p className="text-secondary font-body text-sm tracking-[0.3em] uppercase mb-4">About Us</p>
           <p className="text-muted-foreground font-body text-lg leading-relaxed">
-            {aboutContent.intro}
+            {about.intro}
           </p>
         </motion.div>
 
@@ -32,11 +48,11 @@ const AboutSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <img src={aboutContent.images.about1} alt="Our Mission" className="rounded-lg shadow-2xl w-full max-w-md" />
+            <img src={about.images.about1} alt="Our Mission" className="rounded-lg shadow-2xl w-full max-w-md object-cover h-[500px]" />
             <img
-              src={aboutContent.images.about2}
+              src={about.images.about2}
               alt="Our Vision"
-              className="absolute -bottom-8 -right-4 md:-right-8 w-48 md:w-64 rounded-lg shadow-2xl border-4 border-background"
+              className="absolute -bottom-8 -right-4 md:-right-8 w-48 md:w-64 h-48 md:h-64 object-cover rounded-lg shadow-2xl border-4 border-background"
             />
           </motion.div>
 
@@ -50,13 +66,13 @@ const AboutSection = () => {
             <div>
               <h3 className="text-secondary font-display text-lg mb-3">Our Mission</h3>
               <p className="text-muted-foreground font-body leading-relaxed">
-                {aboutContent.mission}
+                {about.mission}
               </p>
             </div>
             <div>
               <h3 className="text-secondary font-display text-lg mb-3">Our Vision</h3>
               <p className="text-muted-foreground font-body leading-relaxed">
-                {aboutContent.vision}
+                {about.vision}
               </p>
             </div>
             <Link

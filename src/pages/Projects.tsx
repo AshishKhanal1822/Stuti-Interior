@@ -1,9 +1,22 @@
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { allProjects } from "@/constants/projects";
 import ProjectCard from "@/components/ProjectCard";
+import { useSanityProjects } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanityClient";
+import { allProjects } from "@/constants/projects"; // fallback
 
 const Projects = () => {
+    const { projects: sanityProjects, loading } = useSanityProjects();
+
+    // Use Sanity data if available, otherwise fall back to local constants
+    const projectsToShow = sanityProjects.length > 0
+        ? sanityProjects.map((p) => ({
+            image: urlFor(p.image).width(800).url(),
+            title: p.title,
+            category: p.category,
+        }))
+        : allProjects;
+
     return (
         <div className="min-h-screen">
             <Navbar />
@@ -21,16 +34,24 @@ const Projects = () => {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {allProjects.map((project, i) => (
-                            <ProjectCard key={`${project.title}-${i}`} project={project} index={i} />
-                        ))}
-                    </div>
+                    {loading ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {[...Array(6)].map((_, i) => (
+                                <div key={i} className="aspect-[4/5] bg-muted animate-pulse rounded-xl" />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {projectsToShow.map((project, i) => (
+                                <ProjectCard key={`${project.title}-${i}`} project={project} index={i} />
+                            ))}
+                        </div>
+                    )}
                 </div>
-            </main >
+            </main>
 
             <Footer />
-        </div >
+        </div>
     );
 };
 

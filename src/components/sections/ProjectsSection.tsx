@@ -1,12 +1,26 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useInView } from "framer-motion";
-import { featuredProjects } from "@/constants/projects";
+import { featuredProjects as localFeaturedProjects } from "@/constants/projects";
 import ProjectCard from "@/components/ProjectCard";
+import { useSanityFeaturedProjects } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanityClient";
 
 const ProjectsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const { projects: sanityFeatured, loading } = useSanityFeaturedProjects();
+
+  const featuredProjects = sanityFeatured.length > 0
+    ? sanityFeatured.slice(0, 4).map(p => ({
+      image: urlFor(p.image).width(600).url(),
+      title: p.title,
+      category: p.category
+    }))
+    : localFeaturedProjects;
+
+
 
   return (
     <section id="projects" className="section-padding" ref={ref}>
@@ -28,7 +42,7 @@ const ProjectsSection = () => {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredProjects.map((project, i) => (
-            <ProjectCard key={project.title} project={project} index={i} featured={true} />
+            <ProjectCard key={`${project.title}-${i}`} project={project} index={i} featured={true} />
           ))}
         </div>
 

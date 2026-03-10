@@ -1,9 +1,35 @@
 import { motion } from "framer-motion";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { aboutContent } from "@/constants/about";
+import { aboutContent as localAbout } from "@/constants/about";
+import { useSanityAbout } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanityClient";
 
 const About = () => {
+    const { about: sanityAbout, loading } = useSanityAbout();
+
+    const aboutContent = sanityAbout ? {
+        intro: sanityAbout.intro,
+        mission: sanityAbout.mission,
+        vision: sanityAbout.vision,
+        stats: sanityAbout.stats || [],
+        whyChooseUs: sanityAbout.whyChooseUs || [],
+        images: {
+            about1: sanityAbout.images?.[0] ? urlFor(sanityAbout.images[0]).width(800).url() : localAbout.images.about1,
+            about2: sanityAbout.images?.[1] ? urlFor(sanityAbout.images[1]).width(800).url() : localAbout.images.about2,
+            hero1: sanityAbout.images?.[2] ? urlFor(sanityAbout.images[2]).width(800).url() : localAbout.images.hero1,
+            hero2: sanityAbout.images?.[3] ? urlFor(sanityAbout.images[3]).width(800).url() : localAbout.images.hero2,
+        }
+    } : localAbout;
+
+    if (loading && !sanityAbout) return (
+        <div className="min-h-screen">
+            <Navbar />
+            <main className="pt-32 pb-20"></main>
+            <Footer />
+        </div>
+    );
+
     return (
         <div className="min-h-screen">
             <Navbar />

@@ -2,7 +2,9 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { heroSlides as slides } from "@/constants/hero";
+import { heroSlides as localSlides } from "@/constants/hero";
+import { useSanityHeroSlides } from "@/hooks/useSanity";
+import { urlFor } from "@/lib/sanityClient";
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -43,20 +45,34 @@ const HeroSection = () => {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
 
+  const { slides: sanitySlides, loading } = useSanityHeroSlides();
+  const slides = sanitySlides.length > 0
+    ? sanitySlides.map(s => ({
+      image: urlFor(s.backgroundImage).width(1920).url(),
+      title: s.title,
+      highlight: s.highlight,
+      description: s.description
+    }))
+    : localSlides;
+
   const next = useCallback(() => {
+    if (slides.length === 0) return;
     setDirection(1);
     setCurrent((p) => (p + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   const prev = useCallback(() => {
+    if (slides.length === 0) return;
     setDirection(-1);
     setCurrent((p) => (p - 1 + slides.length) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     const timer = setInterval(next, 6000);
     return () => clearInterval(timer);
   }, [next]);
+
+
 
   return (
     <section id="home" className="relative h-screen overflow-hidden bg-primary">
@@ -76,8 +92,8 @@ const HeroSection = () => {
           className="absolute inset-0"
         >
           <img
-            src={slides[current].image}
-            alt={slides[current].title}
+            src={slides[current]?.image}
+            alt={slides[current]?.title}
             className="w-full h-full object-cover"
           />
           {/* Premium Gradient Overlay */}
@@ -104,9 +120,9 @@ const HeroSection = () => {
             <motion.h1
               className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-primary-foreground leading-tight mb-6"
             >
-              {slides[current].title}
+              {slides[current]?.title}
               <br />
-              <span className="text-secondary">{slides[current].highlight}</span>
+              <span className="text-secondary">{slides[current]?.highlight}</span>
             </motion.h1>
             <motion.p
               initial={{ opacity: 0 }}
@@ -114,7 +130,7 @@ const HeroSection = () => {
               transition={{ delay: 0.3 }}
               className="text-primary-foreground/80 text-lg md:text-xl font-body mb-8 max-w-xl"
             >
-              {slides[current].description}
+              {slides[current]?.description}
             </motion.p>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -167,4 +183,3 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
-

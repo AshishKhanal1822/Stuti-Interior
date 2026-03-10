@@ -1,13 +1,33 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 
-import { serviceTabs as tabs } from "@/constants/services";
+import { serviceTabs as localTabs } from "@/constants/services";
+import { useSanityServices } from "@/hooks/useSanity";
 
 const ServicesSection = () => {
   const [activeTab, setActiveTab] = useState("furnishing");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const { services: sanityTabs, loading } = useSanityServices();
+  const tabs = sanityTabs.length > 0
+    ? sanityTabs.map(s => ({
+      id: s.id.current,
+      label: s.label,
+      items: s.items
+    }))
+    : localTabs;
+
+  // Set default active tab if sanity data loads and activeTab isn't in it
+  useEffect(() => {
+    if (tabs.length > 0 && !tabs.find(t => t.id === activeTab)) {
+      setActiveTab(tabs[0].id);
+    }
+  }, [tabs, activeTab]);
+
   const activeItems = tabs.find((t) => t.id === activeTab)?.items ?? [];
+
+
 
   return (
     <section id="services" className="section-padding bg-primary text-primary-foreground" ref={ref}>
@@ -61,7 +81,7 @@ const ServicesSection = () => {
         >
           {activeItems.map((item, i) => (
             <motion.div
-              key={item.num}
+              key={item.num || i}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.15 }}
@@ -77,7 +97,6 @@ const ServicesSection = () => {
             </motion.div>
           ))}
         </motion.div>
-
 
       </div>
     </section>
